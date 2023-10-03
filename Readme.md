@@ -116,9 +116,9 @@ TODO Example
 - [ ] Ability to set default temp, topP, maxT
 - [ ] Ability to set temp, topP, maxT per prompt
 - [ ] Ability to set default models
-- [ ]Ability to set model per prompt
+- [ ] Ability to set model per prompt
 - [ ] Multiple requests with automatic majority answer (aka self-consistency)
-- [ ]Have a 60s timeout
+- [ ] Have a 60s timeout
 
 #### TODO Items (larger)
 - [ ] Integrate Claude SDK
