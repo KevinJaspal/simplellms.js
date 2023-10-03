@@ -107,24 +107,23 @@ const promptTwo = llms.createPrompt(task, schema, inputTwo);
 // you can pass in an array of prompts to runMany
 // by default will run in 'serial' mode if 'parallel' flag not provided
 const [ resultOne, resultTwo ] = await llms.runMany([promptOne, promptTwo], 'parallel');
-
 ```
 
 #### Automatically Parallelize a Prompt
 TODO Example
 
-## TODO Items (smaller)
-- Ability to set default temp, topP, maxT
-- Ability to set temp, topP, maxT per prompt
-- Ability to set default models
-- Ability to set model per prompt
-- Multiple requests with automatic majority answer (aka self-consistency)
-- Have a 60s timeout
+#### TODO Items (smaller)
+- [ ] Ability to set default temp, topP, maxT
+- [ ] Ability to set temp, topP, maxT per prompt
+- [ ] Ability to set default models
+- [ ]Ability to set model per prompt
+- [ ] Multiple requests with automatic majority answer (aka self-consistency)
+- [ ]Have a 60s timeout
 
-## TODO Items (larger)
-- Integrate Claude SDK
-- Throw specific errors instead of failing open by default
-- Integrate a tokenizer counter like TikToken
+#### TODO Items (larger)
+- [ ] Integrate Claude SDK
+- [ ] Throw specific errors instead of failing open by default
+- [ ] Integrate a tokenizer counter like TikToken
 
 ## License
 
