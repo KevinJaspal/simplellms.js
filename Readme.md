@@ -2,7 +2,7 @@
 An opinionated library to quickly integrate any reasonable LLM into your production app.
 
 Turns your LLM into a reliable JSON returning machine! 
-(Will soon integrate with a few LLAMA endpoints)
+(Will soon integrate with a few llama-2 endpoints)
 
 ## Quick start
 ```js
@@ -35,25 +35,16 @@ const result = await llms.run(prompt);
 console.log(result); // { response: { countries: [ 'CAN', 'IND', 'USA' ] }, analytics: Object }
 ```
 
-## Installation
+To keep this library simple, it is not recommended for users that want to have memory, streaming, or to train / fine-tune. Note: Streaming will be supported in the future.
 
-This is a beta and built based on everything we learned taking our upcoming product to production, NetworkGPT.
-
-This library is for people that don't need something as complex as LangChain, and would like to avoid vendor lock-in to OpenAI Functions.
-
-```console
-$ npm install simple-llms
-```
+Currently integrates with the Azure OpenAI library that works with both Azure OpenAI and OpenAI
 
 ## Features
 - [X] Have a prompt format that works out of the box to send and receive JSON.
-- [X] Rotates between multiple endpoints and models. 
-  - This helps with rate limiting and brownout protection if one particular endpoint goes down.
+- [X] Rotates between multiple endpoints and models (helps w/ rate limiting and brownout protection). 
 - [X] Switches from a 4K to 16K context size model when needed
-- [X] Parses json with a wrapper around dirty-json. TODO: link.
-- [X] Easy parallelization that helps in real-time app useage for sub 5-sec latency
-- [X] Basic Unit Tests
-- [X] Automatic retry when JSON can't be parsed
+- [X] Parses poorly formatted json that maybe returned from the LLM and retry logic
+- [X] Easy parallelization that helps in real-time app useage
 - [X] Analytics - latency of request, tokens used, model used
 
 ### TODO (Roadmap)
@@ -68,16 +59,6 @@ $ npm install simple-llms
 - [ ] Automatic retry when server hits a timeout 
   - We recently discovered the TP 99.99 for OpenAI for example jumps from ~10 seconds to 600 seconds.
 - [ ] Support for streaming
-
-To keep this library simple, it is not recommended for users that want to have memory, streaming, or to train / fine-tune. Note: Streaming will be supported in the future.
-
-Currently integrates with the Azure OpenAI library that works with both Azure OpenAI and OpenAI
-
-
-## Philosophy
-This library is built based on everything we learned for taking our upcoming product to production, NetworkGPT. 
-
-The goal of this library is to be able to quickly and reliably take prompts to production. At it's core this library is meant to be simple and to help developers integrate their LLMs into their production application without vendor lock-in.
 
 ## Examples
 #### Initialize Azure Model
@@ -108,22 +89,11 @@ const promptTwo = llms.createPrompt(task, schema, inputTwo);
 // by default will run in 'serial' mode if 'parallel' flag not provided
 const [ resultOne, resultTwo ] = await llms.runMany([promptOne, promptTwo], 'parallel');
 ```
+## Philosophy
+This library is built based on everything we learned for taking our upcoming product to production, NetworkGPT. 
 
-#### Automatically Parallelize a Prompt
-TODO Example
+The goal of this library is to be able to quickly and reliably take prompts to production. At it's core this library is meant to be simple and to help developers integrate their LLMs into their production application without vendor lock-in.
 
-#### TODO Items (smaller)
-- [ ] Ability to set default temp, topP, maxT
-- [ ] Ability to set temp, topP, maxT per prompt
-- [ ] Ability to set default models
-- [ ] Ability to set model per prompt
-- [ ] Multiple requests with automatic majority answer (aka self-consistency)
-- [ ] Have a 60s timeout
-
-#### TODO Items (larger)
-- [ ] Integrate Claude SDK
-- [ ] Throw specific errors instead of failing open by default
-- [ ] Integrate a tokenizer counter like TikToken
 
 ## License
 
