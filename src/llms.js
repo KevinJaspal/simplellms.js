@@ -8,7 +8,7 @@ const { OpenAIClient, OpenAIKeyCredential, AzureKeyCredential } = require("@azur
 const _ = require('lodash');
 
 // Import helper libraries
-const P = require('./utils/promises');
+const BetterPromises = require('./utils/promises');
 const dJSON = require('./utils/dirtyJson');
 
 class LLM {
@@ -64,40 +64,40 @@ class LLM {
                 "contextSize": "4K",
                 "models" : [
                     "gpt-3.5-turbo-0301",
-                    "gpt-3.5-turbo-0613"
+                    "gpt-3.5-turbo-0613",
+                    "gpt-3.5-turbo-1106"
                 ]
             },
             {
                 "contextSize": "16K",
                 "models" : [
-                    "gpt-3.5-turbo-16k-0613"
+                    "gpt-3.5-turbo-16k",
+                    "gpt-3.5-turbo-16k-0613",
                 ]
             }
         ]
     }
 
     /**
-     * 
+     *
      * @param {*} prompts 
      * @param {*} mode 
      * @param {*} opts - {
      *                 "combine" : returns as one combined object for easy usage. By default fails-open
      *                              by combining the results that succeeded
+     *                 "timeout" : millis for timeout,
+     *                 "timeoutRetries" : 1,
+     *                 "concurrency" : Number, defaults to 3 if not specified
      *            }
      * @returns 
      */
-    async runMany(prompts, mode='serial', opts = {}) {
+    async runMany(prompts, opts = {}) {
+
         const promises = prompts.map(prompt => {
             return this.run(prompt);
         });
 
-        let results = null;
-        if (mode === 'parallel') {
-            results = await Promise.allSettled(promises);
-        } else {
-            // assume it is serial otherwise
-            results = await P._series(promises);
-        }
+        let results = await BetterPromises.run(promises, opts);
 
         let combined = {}
         let analytics = {}
@@ -184,7 +184,6 @@ class LLM {
 
     
             try {
-
                 const json = dJSON.parse(stringResult);
                 return { response: json, analytics };
 
@@ -268,10 +267,11 @@ class LLM {
             Example of the structure you should return:
             ${JSON.stringify(example)}
 
-            ${this.inputIntro} 
+            ${this.inputIntro}
 
             ${JSON.stringify(input)}
         `
+
 
         return render;
     }

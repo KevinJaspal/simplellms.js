@@ -46,6 +46,8 @@ Currently integrates with the Azure OpenAI library that works with both Azure Op
 - [X] Parses poorly formatted json that maybe returned from the LLM and retry logic
 - [X] Easy parallelization that helps in real-time app useage
 - [X] Analytics - latency of request, tokens used, model used
+- [X] Automatic retry when server hits a timeout 
+    - We recently discovered the TP 99.99 for OpenAI for example jumps from ~10 seconds to 600 seconds.
 
 ### TODO (Roadmap)
 - [ ] Multiple requests with automatic majority answer selection and ability to define your own resolution function (avg, for booleans OR / AND)
@@ -56,8 +58,6 @@ Currently integrates with the Azure OpenAI library that works with both Azure Op
 - [ ] Integrate a tokenizer counter like TikToken (Current counts chars and makes an estimate to determine context size)
 - [ ] Throw specific errors instead of failing open by default
 - [ ] Ability to set temperature, tokens, maxP
-- [ ] Automatic retry when server hits a timeout 
-  - We recently discovered the TP 99.99 for OpenAI for example jumps from ~10 seconds to 600 seconds.
 - [ ] Support for streaming
 
 ## Examples
