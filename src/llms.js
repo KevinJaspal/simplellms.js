@@ -264,7 +264,8 @@ class LLM {
 
             ${opts.additionalLaws}
 
-            Example of the structure you should return:
+            Example of the structure you should return. Remember this is an example only 
+            and that the values should come from your analysis. It's an example ONLY:
             ${JSON.stringify(example)}
 
             ${this.inputIntro}
